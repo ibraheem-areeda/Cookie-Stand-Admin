@@ -9,22 +9,18 @@ import { useState } from "react"
 
 export default function Home() {
 
-  const [location, setlocation] = useState('')
-  const [min_cus, setmin_cus] = useState('')
-  const [max_cus, setmax_cus] = useState('')
-  const [avg_co, setavg_co] = useState('')
+  const [locations, setLocations] = useState([])
 
-
-
-
-
-  function submitHandler(event){
-    event.preventDefault()
-    setlocation(event.target.location.value)
-    setmin_cus(event.target.min_cus.value)
-    setmax_cus(event.target.max_cus.value)
-    setavg_co(event.target.avg_co.value)
-
+  function newLocationHandler(event) {
+    event.preventDefault();
+    const location = {
+      name: event.target.location.value,
+      minCustomers: event.target.min_cus.value,
+      maxCustomers: event.target.max_cus.value,
+      avgCookies: event.target.avg_co.value,
+      id: locations.length
+    };
+    setLocations([...locations, location])
   }
 
 
@@ -35,7 +31,7 @@ export default function Home() {
       </Head>
       <body className=" flex flex-col min-h-screen">
         <Header />
-        <Main handler={submitHandler} location={location} min_cus={min_cus} max_cus={max_cus} avg_co={avg_co}/>
+        <Main handler={newLocationHandler} locations={locations}/>
       </body >
         <Footer />
 
@@ -83,7 +79,7 @@ function Main(props) {
       </section>
     </section>
   </form>
-  <Data location={props.location} min_cus={props.min_cus} max_cus={props.max_cus} avg_co={props.avg_co} />
+  <Data locations={props.locations}/>
   </>
   )
 }
@@ -97,15 +93,40 @@ function Footer (){
   )
 }
 
-function Data(props) {
-  if (props.location == ""){
-    return <h2 className="text-center " >report table coming soon ... </h2>
+function Data({locations}) {
+
+  if (locations[0] == null){
+    return <h2 className="text-center " >report table coming soon ...</h2>
   }
   else{
 
     return(
-      <>
-  <h2 className="text-center ">location : {props.location} minimum customers per hour : {props.min_cus} maximum customers per hour : {props.max_cus} average cookies per sale : {props.avg_co}</h2>
+      <> <table className="w-1/2 mx-auto my-4">
+      <thead>
+          <tr>
+              <th className="border border-gray-700">No.</th>
+              <th className="border border-gray-700">Location</th>
+              <th className="border border-gray-700">Minimum Customer/Hour</th>
+              <th className="border border-gray-700">Maximum Customer/Hour</th>
+              <th className="border border-gray-700">Average Cookies/Sale</th>
+          </tr>
+              </thead>
+              <tbody>
+                  {
+                   locations.map((item, idx) => {
+                      return (
+                        <tr key={idx}>
+                          <td className="pl-2 border border-gray-700">{item.id}</td>
+                          <td className="pl-2 border border-gray-700">{item.name}</td>
+                          <td className="pl-2 border border-gray-700">{item.minCustomers}</td>
+                          <td className="pl-2 border border-gray-700">{item.maxCustomers}</td>
+                          <td className="pl-2 border border-gray-700">{item.avgCookies}</td>
+                      </tr>
+                      )
+                    })
+                  }
+              </tbody>
+          </table>
   </>
   )
 }
