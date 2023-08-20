@@ -53,6 +53,40 @@ function Header() {
 function Main(props) {
   return (
     <>
+  <Form handler={props.handler}/>
+  <Data locations={props.locations}/>
+  </>
+  )
+}
+
+function Footer (){
+  return(
+
+    <footer className="p-4 mt-8 bg-blue-300 text-gray-50" >
+    &copy; ASAC 2023 and Ibraheem Areeda
+  </footer>
+  )
+}
+
+function Data({locations}) {
+
+  if (locations[0] == null){
+    return <h2 className="text-center " >report table coming soon ...</h2>
+  }
+  else{
+
+    return(
+      <>
+      <h2 className="text-center" >{JSON.stringify(locations[0])}</h2>
+  </>
+  )
+}
+  
+}
+
+function Form (props){
+  return (
+    <>
     <form className="m-auto  rounded-2xl mt-8 bg-blue-500 w-3/5 p-4" onSubmit={props.handler}>
     <h1 className="text-center text-4xl ">Create Cookie Stand</h1>
     <label className="pr-1">Location</label>
@@ -79,56 +113,8 @@ function Main(props) {
       </section>
     </section>
   </form>
-  <Data locations={props.locations}/>
+
   </>
   )
 }
 
-function Footer (){
-  return(
-
-    <footer className="p-4 mt-8 bg-blue-300 text-gray-50" >
-    &copy; ASAC 2023 and Ibraheem Areeda
-  </footer>
-  )
-}
-
-function Data({locations}) {
-
-  if (locations[0] == null){
-    return <h2 className="text-center " >report table coming soon ...</h2>
-  }
-  else{
-
-    return(
-      <> <table className="w-1/2 mx-auto my-4">
-      <thead>
-          <tr>
-              <th className="border border-gray-700">No.</th>
-              <th className="border border-gray-700">Location</th>
-              <th className="border border-gray-700">Minimum Customer/Hour</th>
-              <th className="border border-gray-700">Maximum Customer/Hour</th>
-              <th className="border border-gray-700">Average Cookies/Sale</th>
-          </tr>
-              </thead>
-              <tbody>
-                  {
-                   locations.map((item, idx) => {
-                      return (
-                        <tr key={idx}>
-                          <td className="pl-2 border border-gray-700">{item.id}</td>
-                          <td className="pl-2 border border-gray-700">{item.name}</td>
-                          <td className="pl-2 border border-gray-700">{item.minCustomers}</td>
-                          <td className="pl-2 border border-gray-700">{item.maxCustomers}</td>
-                          <td className="pl-2 border border-gray-700">{item.avgCookies}</td>
-                      </tr>
-                      )
-                    })
-                  }
-              </tbody>
-          </table>
-  </>
-  )
-}
-  
-}
