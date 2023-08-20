@@ -77,7 +77,7 @@ function Data({locations}) {
 
     return(
       <>
-      <h2 className="text-center" >{JSON.stringify(locations[0])}</h2>
+      <h2 className="text-center" >{JSON.stringify(locations[locations.length-1])}</h2>
   </>
   )
 }
