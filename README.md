@@ -1,4 +1,4 @@
-# Class 37
+# Class 37/38
 
 ## Lab Name: Cookie Stand Admin
 
